@@ -1,2 +1,2 @@
 # DATA-LEAKAGE-DETECTION-IN-CLOUD
-Detection of data  leaking or any anomaly in data
+Detection of data  leakage or any anomaly found in data
