@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Leakage Detection System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(to right, #eef2f3, #8e9eab);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 40px 0;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+        }
+        .btn-primary, .btn-danger {
+            border-radius: 50px;
+        }
+        #result {
+            background-color: #1e1e2f;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+        }
+        .form-label {
+            font-weight: 600;
+        }
+        h2 i {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card p-5">
+        <h2 class="text-center mb-4"><i class="fas fa-shield-alt"></i> Data Leakage Detection</h2>
+
+        <!-- Upload Form -->
+        <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data" class="mb-4">
+            <div class="mb-3">
+                <label for="file" class="form-label"><i class="fas fa-upload"></i> Select File</label>
+                <input class="form-control" type="file" name="file" id="file" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100"><i class="fas fa-cloud-upload-alt"></i> Upload File</button>
+        </form>
+
+        <!-- Anomaly Detection -->
+        <div class="text-center my-3">
+            <button onclick="detectLeakage()" class="btn btn-danger px-4"><i class="fas fa-search"></i> Run Anomaly Detection</button>
+        </div>
+
+        <!-- Results -->
+        <div class="mt-4">
+            <h5><i class="fas fa-exclamation-triangle text-warning"></i> Detection Output:</h5>
+            <div id="result">No detection run yet.</div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+    function detectLeakage() {
+        fetch('/detect')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('result').textContent = 'Error during detection.';
+                console.error('Error:', error);
+            });
+    }
+</script>
+
+</body>
+</html>
